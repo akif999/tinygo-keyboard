@@ -38,7 +38,7 @@ func run() error {
 	d.AddDuplexMatrixKeyboard(colPins, rowPins, [][][]keyboard.Keycode{
 		{
 			{0, 0, 0, 0, jp.KeyMod1},
-			{jp.KeyEsc, jp.KeyTab, jp.KeyLeftCtrl, jp.KeyLeftShift, jp.KeyLeftCtrl},
+			{jp.KeyEsc, jp.KeyTab, jp.KeyLeftCtrl, jp.KeyLeftShift, jp.KeyHankaku},
 			{jp.Key1, jp.KeyQ, jp.KeyA, jp.KeyZ, jp.KeyWindows},
 			{jp.Key2, jp.KeyW, jp.KeyS, jp.KeyX, jp.KeyLeftAlt},
 			{jp.Key3, jp.KeyE, jp.KeyD, jp.KeyC, jp.KeyMod1},
@@ -50,7 +50,7 @@ func run() error {
 		},
 		{
 			{0, 0, 0, 0, jp.KeyMod1},
-			{jp.KeyEsc, jp.KeyTab, jp.KeyLeftCtrl, jp.KeyLeftShift, jp.KeyLeftCtrl},
+			{jp.KeyEsc, jp.KeyTab, jp.KeyLeftCtrl, jp.KeyLeftShift, jp.KeyHankaku},
 			{jp.KeyF1, jp.KeyQ, jp.KeyHome, jp.KeyF13, jp.KeyWindows},
 			{jp.KeyF2, jp.KeyF15, jp.KeyS, jp.KeyF14, jp.KeyLeftAlt},
 			{jp.KeyF3, jp.KeyEnd, jp.MouseRight, jp.MouseMiddle, jp.KeyMod1},
