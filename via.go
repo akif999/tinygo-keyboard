@@ -3,10 +3,14 @@
 package keyboard
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"machine"
 	"machine/usb"
 	"machine/usb/descriptor"
+
+	"github.com/itchio/lzma"
 )
 
 func init() {
@@ -294,4 +298,36 @@ func setupHandler(setup usb.Setup) bool {
 		ok = true
 	}
 	return ok
+}
+
+func LoadConfig(jb []byte) error {
+	var err error
+	KeyboardDef, err = loadConfig(jb)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func loadConfig(jb []byte) ([]byte, error) {
+	// minify json
+	var book map[string]interface{}
+	if err := json.Unmarshal(jb, &book); err != nil {
+		return nil, fmt.Errorf("json.Unmarshal() failed: %s", err.Error())
+	}
+	data, err := json.Marshal(book)
+	if err != nil {
+		return nil, fmt.Errorf("json.Marshal() failed: %s", err.Error())
+	}
+
+	// compress
+	var b bytes.Buffer
+	w := lzma.NewWriter(&b)
+	_, err = w.Write(data)
+	if err != nil {
+		return nil, fmt.Errorf("lzma.Write() failed: %s", err.Error())
+	}
+
+	return b.Bytes(), nil
 }
