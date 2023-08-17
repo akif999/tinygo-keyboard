@@ -4,7 +4,6 @@ package keyboard
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"machine"
 	"machine/usb"
@@ -312,22 +311,24 @@ func LoadConfig(jb []byte) error {
 
 func loadConfig(jb []byte) ([]byte, error) {
 	// minify json
-	var book map[string]interface{}
-	if err := json.Unmarshal(jb, &book); err != nil {
-		return nil, fmt.Errorf("json.Unmarshal() failed: %s", err.Error())
-	}
-	data, err := json.Marshal(book)
-	if err != nil {
-		return nil, fmt.Errorf("json.Marshal() failed: %s", err.Error())
-	}
+	// var book map[string]interface{}
+	// if err := json.Unmarshal(jb, &book); err != nil {
+	// 	return nil, fmt.Errorf("json.Unmarshal() failed: %s", err.Error())
+	// }
+	// data, err := json.Marshal(book)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("json.Marshal() failed: %s", err.Error())
+	// }
 
 	// compress
 	var b bytes.Buffer
-	w := lzma.NewWriter(&b)
-	_, err = w.Write(data)
+	w := lzma.NewWriterLevel(&b, lzma.BestSpeed)
+	// _, err = w.Write(data)
+	_, err := w.Write(jb)
 	if err != nil {
 		return nil, fmt.Errorf("lzma.Write() failed: %s", err.Error())
 	}
+	w.Close()
 
 	return b.Bytes(), nil
 }
